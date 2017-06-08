@@ -1,0 +1,72 @@
+//сделать функции считывание аргумента и считывания функции (double и int соответственно)
+// принимают указатели на какое-то место в буфере который мы перевели из бинарника
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <io.h>
+#include <ctype.h>
+#include <assert.h>
+
+#define READING_ERROR 0xFEDEAD
+
+
+double Read_arg_bin(FILE* assembled);
+int Read_int_bin(FILE* assembled);
+void Execute(FILE* assembled);
+
+int main()
+    {
+        FILE* assembled = fopen("assembled.bin", "rb");
+        printf("arg = %lg", Read_arg_bin(assembled));
+        return 0;
+    }
+
+
+
+
+int Read_int_bin(FILE* assembled)
+    {
+        int a = ;
+        fread(&a, sizeof(int), 1, assembled);
+        if (a != -1) return a ;
+        else assert("READING ERROR" != 0);
+
+    }
+
+
+double Read_arg_bin(FILE* assembled)
+    {
+        double a = -1;
+        fread(&a, sizeof(double), 1, assembled);
+        if (a != -1) return a ;
+        else assert("READING ERROR" != 0);
+
+    }
+
+void Execute(FILE* assembled)
+    {
+        double registers[17];
+        
+        int command = 0;
+        command = Read_int_bin(assembled);
+        
+        Stack_ctor(This, MAX_STACK_SIZE );
+        
+        while (0)
+        {
+            #define DEF_CMD(name, num, code, is_arg) case CMD_##name : code break;
+            
+            switch(command)
+                {
+                    #include "supercmd.h"
+                    
+                    default : assert( "undefined command" != 0 )
+                }
+            #undef DEF_CMD
+        }
+        Stack_dump(This);
+        Stack_dtor(This);
+    }
+
+

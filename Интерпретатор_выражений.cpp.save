@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <io.h>
+#include <ctype.h>
+#include <assert.h>
+#include <math.h>
+
+#define MAX_STR_LEN  100
+#define NDEBUG
+
+int GetG0(char* str);
+int GetN();
+int GetE();
+int GetT();
+int GetP();
+int GetD();
+
+char* s = NULL;
+
+int main()
+    {
+
+    char str[MAX_STR_LEN];
+    scanf("%s",str);
+    int result = GetG0(str);
+    printf ("result = %i\n", result);
+    return 0;
+
+    }
+
+
+#ifdef NDEBUG \
+#define printf(...) { }
+#endif
+
+
+
+int GetG0(char* str)
+    {
+        s = str;
+        printf("CALLING E \n");
+        int result = GetE();
+        if (*s != '\0') printf("ERROR no \\0 that was waited \n");
+        return result;
+
+    }
+
+
+int GetN()
+    {
+        int res = 0;  //просто смотрим на наши првила и делаем соответствующий код для распознавания
+        while ( '0' <= *s && *s <= '9')    // жрет цифру за цифрой пока не наткнется на что то другое
+            {
+
+                res = res*10 + (*s -'0');
+                s++;
+            }
+            printf("%i\n", res);
+        return res;
+    }
+
+
+int GetE()
+    {
+        printf("CALLING T \n");
+        int res = GetT();
+        while (*s == '+' || *s == '-')
+            {
+                printf("I'm im + or -  \n");
+                char op = *s;
+                s++;
+                printf("CALLING T from while \n");
+                int res2 = GetT();
+
+                if (op == '+') {printf("I MAKE PLUS  \n");  res = res + res2;  }
+                if (op == '-') res = res - res2;
+            }
+        return res;
+    }
+
+int GetD()
+{
+    int res = GetP();
+    while (*s == '^')
+    {
+        s++;
+        int res2 = GetP();
+        res = pow(res, res2);
+    }
+
+    return res;
+}
+
+
+int GetT()
+    {
+        printf("CALLING P \n");
+        int res = GetD();
+        while (*s == '*' || *s == '/')
+            {
+                printf("I'm in *or/  \n");
+                char op = *s;
+                s++;
+                int res2 = GetD();
+                if (op == '*') res = res * res2;
+                if (op == '/') res = res / res2;
+            }
+        return res;
+    }
+
+int GetP()           //
+    {
+        if (*s == '(' )
+            {
+                printf("MAMA I AM IN ( HELP  \n");
+                s++;
+                int res = GetE();
+                assert( *s == ')' );
+                s++;
+                return res;
+            }
+        else {printf("CALLING N \n"); return GetN(); }
+    }

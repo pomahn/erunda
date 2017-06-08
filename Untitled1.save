@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <io.h>
+#include <ctype.h>
+#include <assert.h>
+
+int filesize (FILE * file);
+char* file_v_buf (FILE *reading);
+int string_count (char*  buf_pointer);
+void strings_pointers (char* buf_point, struct pointer* *pointers, int string_counter);
+int my_strcmp (const void *string1, const void *string2);
+void _copy (char* *normsort, char* *pointer_on_strings, int string_counter);
+void file_print (FILE*writing, struct pointer* *pointers, int string_counter);
+int is_rus_letter (char letter);
+char my_tolower (char letter);
+int my_reverse_strcmp (const void *string1, const void *string2);
+void struct_copy (struct pointer* *newpointer, struct pointer* *pointers, int string_counter);
+
+
+typedef struct pointer
+    {
+    char* begining;
+    char* ending;
+    };
+
+
+
+int main(int argc, char** argv)
+{
+    FILE* reading = fopen(argv[1], "r");
+    assert(reading);
+    
+    char* buf_pointer = file_v_buf (reading);
+    
+    int string_counter = string_count (buf_pointer);
+
+    printf("string_counter\n");
+
+    /*pointer pointers_struct[string_counter-1];
+    pointer* pointers[string_counter-1];
+
+    for (int i = 0; i < string_counter; i++)
+        {
+        pointers[i] = &pointers_struct[i];
+        } */
+        
+    pointer pointers = (pointer*) calloc(string_counter-1, sizeof(pointer));
+
+    strings_pointers (buf_pointer, pointers, string_counter);
+
+
+
+    /*struct pointer* pointers_sort[string_counter-1];
+    struct pointer pointers_sort_struct[string_counter-1];
+    for (int i=0; i<string_counter; i++)
+        {
+        pointers_sort[i] = &pointers_sort_struct[i] ;
+        } */
+
+   
+    pointer* pointers_sort = (pointer*) calloc(string_counter-1, sizeof(pointer));
+
+    struct_copy(pointers_sort, pointers, string_counter);
+    
+    printf("4\n");
+
+    qsort (pointers_sort,         string_counter, sizeof(pointers_sort[0]),         my_strcmp);
+
+    
+    printf("asdfadfsdfsdf\n");
+    
+    FILE * writing = fopen(argv[2], "wt");
+    
+    file_print(writing,         pointers_sort,         string_counter) ;
+    
+    fclose(reading);
+    
+    fclose(writing);
+
+    return 0;
+    }
+    
+    
+    
+    
+    

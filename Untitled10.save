@@ -1,0 +1,15 @@
+
+
+#define DEBUG(...) { __VA_ARGS__ ;}
+
+
+#include "TXLib.h"
+
+int main()
+    {
+    txCreateWindow (800, 600);
+
+ // the zhirnaya funkcija! ak    
+
+    return 0;
+    }

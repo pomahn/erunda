@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <io.h>
+#include <ctype.h>
+#include <assert.h>
+
+#ifdef NDEBUG
+    #define DEBUG( op ) 
+#else
+    #define DEBUG( op ) { op; }
+#endif
+
+
+int main()
+{
+    
+

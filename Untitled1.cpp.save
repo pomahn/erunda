@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/*int main()
+{
+    char s1[100] ="";
+    char s2[100] ="";
+    FILE * onegin ;
+    onegin = fopen("C:\\Users\\pomah_000\\Desktop\\Onegin\\reading.txt" , "rt");
+    FILE * writing = fopen("C:\\Users\\pomah_000\\Desktop\\Onegin\\writing.txt" , "wt"  );
+
+
+    while ( fgets(s1, 100, onegin) != NULL )
+        {
+            if (strcmp(s1,s2)!=0)
+                {
+                    fprintf( writing, "%s", s1);
+                    sprintf(s2,"%s", s1);
+                }
+
+            printf("%s",s2);
+        }
+    return 0 ;
+} */
+
+int main()
+    {
+    char s1[100] ="";
+    char s2[100] ="";
+    char s3[100] ="";
+    FILE * onegin ;
+    onegin = fopen("C:\\Users\\pomah_000\\Desktop\\Onegin\\reading.txt" , "rt");
+    FILE * a;
+    FILE * writing = fopen("C:\\Users\\pomah_000\\Desktop\\Onegin\\writing.txt" , "w+"  );
+    while ( fgets(s1, 100, onegin) != NULL )
+        {
+
+         sprintf(s2, " ");
+         while ( strcmp(s1, s2 ) >= 0 )
+            {
+
+                if (fgets(s2, 100, writing) == NULL)
+                    {
+                        break;
+                    }
+            }
+
+
+        a = fopen("C:\\Users\\pomah_000\\Desktop\\Onegin\\a.txt" , "w+"  );
+            while ( fgets(s3, 100, writing) != NULL )
+                {
+                    fprintf( a, "%s", s3);
+                }
+            sprintf(s2, " ");
+         while ( strcmp(s1, s2 ) >= 0 )
+            {
+
+                if (fgets(s2, 100, writing) == NULL)
+                    {
+                        break;
+                    }
+            }
+        fprintf( writing, "%s", s1);
+        rewind(a);
+        while ( fgets(s3, 100, a) != NULL )
+            {
+                fprintf( writing, "%s", s3);
+            }
+        fclose(a);
+        }
+    return 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
